@@ -35,6 +35,7 @@ public class PlayerController : Tank
 
         cameraRoot.transform.SetParent(null);
         canRotateCamera = true;
+        team = Team.PLAYER;
     }
 
     // Update is called once per frame
@@ -115,6 +116,9 @@ public class PlayerController : Tank
         {
             StartCoroutine(RotateCamera(true));
         }
+
+
+
     }
 
     IEnumerator RotateCamera(bool right)
@@ -127,7 +131,7 @@ public class PlayerController : Tank
         float currentEvaluation;
         while (timer < 0.25)
         {
-            timer += Time.fixedDeltaTime;
+            timer += Time.deltaTime;
             currentEvaluation = cameraRotation.Evaluate(timer);
 
             cameraRoot.transform.rotation = originalRotation;

@@ -1,10 +1,18 @@
 using UnityEngine;
 
+public enum Team
+{
+    PLAYER,
+    ENEMY
+}
+
+
 [RequireComponent(typeof(Rigidbody))]
 public class Tank : MonoBehaviour
 {
     protected Rigidbody rb;
 
+    protected Team team;
 
     int currentHP;
     float timeSinceLastFire;
@@ -52,6 +60,7 @@ public class Tank : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        Debug.Log("Taking " + damage + " damage");
         currentHP -= damage;
         if (currentHP <= 0)
         {
@@ -120,9 +129,14 @@ public class Tank : MonoBehaviour
         }
     }
 
-    public Vector3 GetVelocity()
+    public Team GetTeam()
     {
-        return rb.linearVelocity;
+        return team;
+    }
+
+    public GameObject GetBarrel()
+    {
+        return barrel;
     }
 
     public float GetTimeSince()

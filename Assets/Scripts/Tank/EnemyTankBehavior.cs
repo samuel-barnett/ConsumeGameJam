@@ -18,10 +18,20 @@ public class EnemyTankBehavior : Tank
 
     EnemyMoveState currentState = EnemyMoveState.DECIDE_DESTINATION;
 
-    float timeToWait;
+    [Header("EnemyTankBehavior - Adjustable Variables")]
+    [SerializeField] float randomWaitMinTime;
+    [SerializeField] float randomWaitMaxTime;
 
-    public GameObject prefabToSpawn;
+    [SerializeField] float randomDestinationMinDistance;
+    [SerializeField] float randomDestinationMaxDistance;
 
+
+    protected override void SetupEntity()
+    {
+        base.SetupEntity();
+
+        team = Team.ENEMY;
+    }
 
     // Update is called once per frame
     void Update()
@@ -40,9 +50,11 @@ public class EnemyTankBehavior : Tank
                 {
                     GoToDestination();
                 }
+                CheckDestinationReached();
                 break;
             case EnemyMoveState.WAIT:
-                StartCoroutine(WaitInPlace(1f));
+                float timeToWait = Random.Range(randomWaitMinTime, randomWaitMaxTime);
+                StartCoroutine(WaitInPlace(timeToWait));
                 break;
             default:
                 Debug.LogError("case not accounted for");
@@ -53,7 +65,6 @@ public class EnemyTankBehavior : Tank
         LookToPlayer();
         AddTimeSinceLastShot();
         FireProjectile();
-
     }
 
     void DecideNewDestination()
@@ -61,8 +72,9 @@ public class EnemyTankBehavior : Tank
         int attempts = 15;
         while (attempts > 0)
         {
-            Vector3 newDestination = new Vector3(transform.position.x + Random.Range(-3f, 3f), 0, transform.position.z + Random.Range(-3f, 3f)).normalized;
-            newDestination.y = transform.position.y;
+            float distance = Random.Range(randomDestinationMinDistance, randomDestinationMaxDistance);
+            Vector3 newDestination = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized * distance;
+            newDestination += transform.position;
 
             RaycastHit hit;
             bool objectHit = Physics.Raycast(transform.position, newDestination - transform.position, out hit, (newDestination - transform.position).magnitude);
@@ -71,12 +83,11 @@ public class EnemyTankBehavior : Tank
             {
                 destination = newDestination;
                 currentState = EnemyMoveState.MOVING;
-                GameObject obj = Instantiate(prefabToSpawn);
-                obj.transform.position = destination;
-                Debug.Log(destination);
+                //GameObject obj = Instantiate(prefabToSpawn);
+                //obj.transform.position = destination;
+                //Debug.Log(destination);
                 return;
             }
-
             attempts--;
         }
     }
@@ -85,16 +96,11 @@ public class EnemyTankBehavior : Tank
     {
         Vector3 relative = transform.InverseTransformPoint(destination);
         float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
-        DebugUI.sInstance.SetDebugText("angle:" + angle);
         if (angle < 1 && angle > -1)
         {
             // turn complete
             //Debug.Log("Turn Finished");
             return true;
-        }
-        else
-        {
-            Debug.Log(angle);
         }
 
         if (angle > 0)
@@ -105,25 +111,25 @@ public class EnemyTankBehavior : Tank
         {
             Steer(-1);
         }
-
-
-
-
-            return false;
+        
+        return false;
     }
 
     void GoToDestination()
     {
         Drive(1);
+    }
 
+    void CheckDestinationReached()
+    {
         // check if we have reached our destination :)
-        if ((transform.position - destination).magnitude <= 0.05)
+        DebugUI.sInstance.SetDebugText("distance:" + (destination - transform.position).magnitude);
+        if ((destination - transform.position).magnitude <= 0.1)
         {
+            Debug.Log("reached destination");
             rb.linearVelocity = Vector3.zero;
             currentState = EnemyMoveState.WAIT;
         }
-
-
     }
 
     IEnumerator WaitInPlace(float timeToWait)

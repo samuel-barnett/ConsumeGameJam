@@ -7,7 +7,15 @@ public class Bullet : MonoBehaviour
 {
     Rigidbody rb;
 
+    Team bulletTeam;
+
+    [SerializeField] int damage;
+
     [SerializeField] float gravityModifier;
+
+    
+
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,7 +36,14 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Tank tank = collision.gameObject.GetComponent<Tank>();
+        if (tank && tank.GetTeam() != bulletTeam)
+        {
+            tank.TakeDamage(damage);
+        }
+
         Destroy(gameObject);
     }
+
 
 }

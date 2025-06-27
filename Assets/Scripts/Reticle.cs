@@ -1,0 +1,30 @@
+using UnityEngine;
+
+public class Reticle : MonoBehaviour
+{
+    public GameObject endPoint;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        Cursor.visible = false;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // get positions
+        Vector3 reticlePosition = Input.mousePosition;
+
+        GameObject barrelRef = PlayerController.sInstance.GetBarrel();
+        Vector3 startPosition = Camera.main.WorldToScreenPoint(barrelRef.transform.position);
+        Vector3 endPosition = Camera.main.WorldToScreenPoint(barrelRef.transform.position + barrelRef.transform.up * 60);
+
+        // project it onto a line
+        reticlePosition = VectorUtil.ClampPoint(reticlePosition, startPosition, endPosition);
+        endPoint.transform.position = Camera.main.ScreenToWorldPoint(endPosition);
+
+        transform.position = reticlePosition;
+
+    }
+}
