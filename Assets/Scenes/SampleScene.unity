@@ -157,6 +157,48 @@ MonoBehaviour:
   cameraRoot: {fileID: 1096377860}
   movementSpeed: 1
   jumpForce: 300
+  cameraRotation:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 519.7898
+      outSlope: 519.7898
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.07407174
+      value: 38.501736
+      inSlope: 974.8265
+      outSlope: 974.8265
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.19704412
+    - serializedVersion: 3
+      time: 0.12558305
+      value: 75.645134
+      inSlope: 265.07104
+      outSlope: 265.07104
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.23897935
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.25
+      value: 90
+      inSlope: 115.3771
+      outSlope: 115.3771
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!54 &22527815
 Rigidbody:
   m_ObjectHideFlags: 0
