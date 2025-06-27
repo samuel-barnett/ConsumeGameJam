@@ -8,8 +8,7 @@ public class PlayerController : Tank
     public static PlayerController sInstance { get; private set; }
 
 
-    // states 
-    bool canJump;
+    // states
     bool canRotateCamera;
 
     // Serializes
@@ -17,12 +16,13 @@ public class PlayerController : Tank
     [SerializeField] GameObject cameraRoot;
 
     [Header("PlayerController - Adjustable Values")]
-    [SerializeField] float movementSpeed = 5;
-    [SerializeField] float jumpForce = 1;
+    //[SerializeField] float movementSpeed = 5;
     [SerializeField] AnimationCurve cameraRotation;
 
     protected override void SetupEntity()
     {
+        base.SetupEntity();
+
         // singleton
         if (sInstance != null && sInstance != this)
         {
@@ -40,10 +40,15 @@ public class PlayerController : Tank
     // Update is called once per frame
     void Update()
     {
+        // movement
         MovementCode();
-        //Jump();
         SwivelRotation();
+
+        // shooting
+        AddTimeSinceLastShot();
         ShootInput();
+
+        // camera
         CameraCode();
 
 
@@ -55,13 +60,16 @@ public class PlayerController : Tank
         float moveSide = Input.GetAxisRaw("Horizontal");
         float moveForward = Input.GetAxisRaw("Vertical");
 
-        Vector3 moveVector = ((cameraRoot.transform.right * moveSide) + (cameraRoot.transform.forward * moveForward)).normalized;
+        Drive(moveForward);
+        Steer(moveSide);
+
+        //Vector3 moveVector = ((cameraRoot.transform.right * moveSide) + (cameraRoot.transform.forward * moveForward)).normalized;
 
         //Vector3 move = cameraRoot.transform.worldToLocalMatrix * new Vector3(moveSide, 0, moveForward).normalized;
-        rb.AddForce(moveVector * movementSpeed);
+        //rb.AddForce(moveVector * movementSpeed);
 
         // look in the direction of movement
-        transform.LookAt(transform.position + moveVector);
+        //transform.LookAt(transform.position + moveVector);
     }
 
     void SwivelRotation()
@@ -85,9 +93,9 @@ public class PlayerController : Tank
 
     void ShootInput()
     {
-        if (Input.GetMouseButtonDown((int)MouseButton.Left))
+        if (Input.GetMouseButton((int)MouseButton.Left))
         {
-            ShootProjectile();
+            TryShootProjectile();
         }
     }
 
@@ -99,20 +107,20 @@ public class PlayerController : Tank
         // rotate left
         if (Input.GetKeyDown(KeyCode.Q) && canRotateCamera)
         {
-            StartCoroutine(RotateCamera(true));
+            StartCoroutine(RotateCamera(false));
         }
 
         // rotate right
         if (Input.GetKeyDown(KeyCode.E) && canRotateCamera)
         {
-            StartCoroutine(RotateCamera(false));
+            StartCoroutine(RotateCamera(true));
         }
     }
 
-    IEnumerator RotateCamera(bool left)
+    IEnumerator RotateCamera(bool right)
     {
         canRotateCamera = false;
-        Vector3 rotationVector = (left) ? Vector3.up : Vector3.down;
+        Vector3 rotationVector = (right) ? Vector3.up : Vector3.down;
         Quaternion originalRotation = cameraRoot.transform.rotation;
 
         float timer = 0;
@@ -125,7 +133,7 @@ public class PlayerController : Tank
             cameraRoot.transform.rotation = originalRotation;
             cameraRoot.transform.Rotate(rotationVector * currentEvaluation);
 
-            yield return new WaitForSeconds(Time.fixedDeltaTime);
+            yield return new WaitForSeconds(Time.deltaTime);
         }
 
         cameraRoot.transform.rotation = originalRotation;
