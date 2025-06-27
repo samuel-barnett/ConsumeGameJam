@@ -13,10 +13,6 @@ public class Bullet : MonoBehaviour
 
     [SerializeField] float gravityModifier;
 
-    
-
-
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -45,5 +41,10 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject);
     }
 
+
+    public void SetTeam(Team newTeam)
+    {
+        bulletTeam = newTeam;
+    }
 
 }

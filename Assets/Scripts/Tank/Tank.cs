@@ -22,7 +22,6 @@ public class Tank : MonoBehaviour
     [SerializeField] protected GameObject barrel;
     [SerializeField] protected GameObject head;
 
-
     [Header("Tank - Prefabs")]
     [SerializeField] GameObject bulletPrefab;
 
@@ -35,8 +34,6 @@ public class Tank : MonoBehaviour
 
     [SerializeField] float fireRate = 1;
     [SerializeField] float projectileForce;
-
-
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -51,7 +48,6 @@ public class Tank : MonoBehaviour
         timeSinceLastFire = fireRate;
     }
 
-
     // Update is called once per frame
     void Update()
     {
@@ -60,8 +56,9 @@ public class Tank : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        Debug.Log("Taking " + damage + " damage");
+        //Debug.Log("Taking " + damage + " damage");
         currentHP -= damage;
+        TextPopUpSpawner.sInstance.DamagePopUp(damage, transform.position + (Vector3.up * 4));
         if (currentHP <= 0)
         {
             Die();
@@ -76,12 +73,12 @@ public class Tank : MonoBehaviour
     public void HealDamage(int healAmount)
     {
         currentHP += healAmount;
+        TextPopUpSpawner.sInstance.HealPopUp(healAmount, transform.position + (Vector3.up * 4));
         if (currentHP > maxHP)
         {
             currentHP = maxHP;
         }
     }
-
 
     protected void Drive(float direction)
     {
@@ -98,18 +95,15 @@ public class Tank : MonoBehaviour
     {
         if (rb.linearVelocity.magnitude > speedLimit)
         {
-            //Debug.Log("Speed Limit");
             rb.linearVelocity = rb.linearVelocity.normalized * speedLimit;
         }
     }
-
 
     protected void SetSwivelRotation(Vector3 positionToLookAt)
     {
         Vector3 lookTo = positionToLookAt;
         lookTo.y = swivel.transform.position.y;
         swivel.transform.LookAt(lookTo);
-
     }
 
     protected void AddTimeSinceLastShot()
@@ -125,6 +119,8 @@ public class Tank : MonoBehaviour
             GameObject obj = Instantiate(bulletPrefab);
             obj.transform.position = barrel.transform.position;
             obj.GetComponent<Rigidbody>().AddForce(barrel.transform.up * projectileForce);
+            Bullet b = obj.GetComponent<Bullet>();
+            b.SetTeam(team);
             timeSinceLastFire = 0;
         }
     }
