@@ -1,24 +1,38 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
-public class PlayerController : Entity
+public class PlayerController : Tank
 {
+    public static PlayerController sInstance { get; private set; }
+
+
     // states 
     bool canJump;
     bool canRotateCamera;
 
     // Serializes
-    [Header("Refs")]
+    [Header("PlayerController - Refs")]
     [SerializeField] GameObject cameraRoot;
 
-    [Header("Adjustable Values")]
+    [Header("PlayerController - Adjustable Values")]
     [SerializeField] float movementSpeed = 5;
     [SerializeField] float jumpForce = 1;
     [SerializeField] AnimationCurve cameraRotation;
 
     protected override void SetupEntity()
     {
+        // singleton
+        if (sInstance != null && sInstance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            sInstance = this;
+        }
+
         cameraRoot.transform.SetParent(null);
         canRotateCamera = true;
     }
@@ -27,8 +41,12 @@ public class PlayerController : Entity
     void Update()
     {
         MovementCode();
-        Jump();
+        //Jump();
+        SwivelRotation();
+        ShootInput();
         CameraCode();
+
+
 
     }
 
@@ -46,25 +64,33 @@ public class PlayerController : Entity
         transform.LookAt(transform.position + moveVector);
     }
 
-    // trigger hits or leaves floor
-    private void OnTriggerEnter(Collider other)
+    void SwivelRotation()
     {
-        canJump = true;
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        //canJump = false;
-    }
+        Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+        float length;
 
-    void Jump()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) && canJump)
+        if (groundPlane.Raycast(cameraRay, out length))
         {
-            //Debug.Log("jump");
-            rb.AddForce(transform.up * jumpForce);
-            canJump = false;
+            Vector3 pointToLook = cameraRay.GetPoint(length);
+            SetSwivelRotation(pointToLook);
+        }
+
+
+        //RaycastHit hit;
+        //bool objectHit = Physics.Raycast(mouse, Camera.main.transform.forward, out hit, 1000);
+        
+    }
+    
+
+    void ShootInput()
+    {
+        if (Input.GetMouseButtonDown((int)MouseButton.Left))
+        {
+            ShootProjectile();
         }
     }
+
 
     void CameraCode()
     {
@@ -74,14 +100,12 @@ public class PlayerController : Entity
         if (Input.GetKeyDown(KeyCode.Q) && canRotateCamera)
         {
             StartCoroutine(RotateCamera(true));
-            //cameraRoot.transform.Rotate(Vector3.up * 90);
         }
 
         // rotate right
         if (Input.GetKeyDown(KeyCode.E) && canRotateCamera)
         {
             StartCoroutine(RotateCamera(false));
-            //cameraRoot.transform.Rotate(Vector3.down * 90);
         }
     }
 
@@ -104,8 +128,14 @@ public class PlayerController : Entity
             yield return new WaitForSeconds(Time.fixedDeltaTime);
         }
 
+        cameraRoot.transform.rotation = originalRotation;
+        cameraRoot.transform.Rotate(rotationVector * 90f);
+
         canRotateCamera = true;
     }
+
+
+    
 
 
 }
