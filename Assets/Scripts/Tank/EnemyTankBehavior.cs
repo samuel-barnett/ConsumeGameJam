@@ -34,7 +34,7 @@ public class EnemyTankBehavior : Tank
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         switch (currentState)
         {
@@ -123,7 +123,6 @@ public class EnemyTankBehavior : Tank
     void CheckDestinationReached()
     {
         // check if we have reached our destination :)
-        DebugUI.sInstance.SetDebugText("distance:" + (destination - transform.position).magnitude);
         if ((destination - transform.position).magnitude <= 0.1)
         {
             Debug.Log("reached destination");

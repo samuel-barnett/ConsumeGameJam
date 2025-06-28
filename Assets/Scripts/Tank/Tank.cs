@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using UnityEngine;
+using System.Collections.Generic;
 
 public enum Team
 {
@@ -17,6 +19,9 @@ public class Tank : MonoBehaviour
     int currentHP;
     float timeSinceLastFire;
 
+    public List<Consumable> consumables = new List<Consumable>();
+    int currentConsumable = 0;
+
     [Header("Tank - Refs")]
     [SerializeField] protected GameObject swivel;
     [SerializeField] protected GameObject barrel;
@@ -31,6 +36,8 @@ public class Tank : MonoBehaviour
     [SerializeField] float movementAcceleration;
     [SerializeField] float speedLimit;
     [SerializeField] float steeringSpeed;
+    [SerializeField] int inventorySize = 4;
+
 
     [SerializeField] float fireRate = 1;
     [SerializeField] float projectileForce;
@@ -82,13 +89,17 @@ public class Tank : MonoBehaviour
 
     protected void Drive(float direction)
     {
-        rb.AddForce((transform.forward * direction).normalized * movementAcceleration * Time.deltaTime);
+        Vector3 moveTo = transform.position + (movementAcceleration * Time.fixedDeltaTime * (transform.forward * direction).normalized);
+        rb.MovePosition(moveTo);
+        //rb.AddForce((transform.forward * direction).normalized * movementAcceleration);
         EnforceSpeedLimit();
     }
 
     protected void Steer(float direction)
     {
-        transform.Rotate(transform.up * direction * steeringSpeed * Time.deltaTime);
+        Quaternion rotateTo = transform.rotation * Quaternion.Euler(direction * steeringSpeed * Time.fixedDeltaTime * transform.up);
+        rb.MoveRotation(rotateTo);
+        //transform.Rotate(transform.up * direction * steeringSpeed);
     }
 
     protected void EnforceSpeedLimit()
@@ -108,7 +119,7 @@ public class Tank : MonoBehaviour
 
     protected void AddTimeSinceLastShot()
     {
-        timeSinceLastFire += Time.deltaTime;
+        timeSinceLastFire += Time.fixedDeltaTime;
     }
 
 
@@ -125,6 +136,59 @@ public class Tank : MonoBehaviour
         }
     }
 
+    public bool TryGiveConsumable(Consumable consumable)
+    {
+        if (InventoryFull())
+        {
+            return false;
+        }
+
+        consumables.Add(consumable);
+
+
+        return true;
+    }
+
+    bool InventoryFull()
+    {
+        if (consumables.Count >= inventorySize)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public void CycleInventory(int amount)
+    {
+        if (amount > 0)
+        {
+            currentConsumable = (currentConsumable >= consumables.Count - 1) ? 0 : currentConsumable += 1;
+        }
+        else
+        {
+            currentConsumable = (currentConsumable <= 0) ? consumables.Count - 1 : currentConsumable -= 1;
+        }
+    }
+
+    public bool TryUseConsumable()
+    {
+        if (currentConsumable < consumables.Count && consumables[currentConsumable] && !consumables[currentConsumable].GetActivated())
+        {
+            consumables[currentConsumable].ActivateEffect();
+            consumables.RemoveAt(0);
+            currentConsumable--;
+            if (currentConsumable < 0)
+            {
+                currentConsumable = 0;
+            }
+            return true;
+        }
+
+
+        return false;
+    }
+
+
     public Team GetTeam()
     {
         return team;
@@ -139,5 +203,30 @@ public class Tank : MonoBehaviour
     {
         return timeSinceLastFire;
     }
+
+    public GameObject GetItemAtIndex(int index)
+    {
+        if (index < consumables.Count)
+        {
+            return consumables[index].gameObject;
+        }
+        return null;
+    }
+
+    public int GetCurrentItem()
+    {
+        return currentConsumable;
+    }
+
+    public int GetItemsHeldCount()
+    {
+        return consumables.Count;
+    }
+
+    public int GetInventorySize()
+    {
+        return inventorySize;
+    }
+
 
 }

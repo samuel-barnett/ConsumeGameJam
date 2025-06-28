@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class Reticle : MonoBehaviour
 {
-    public GameObject endPoint;
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -18,13 +16,11 @@ public class Reticle : MonoBehaviour
 
         GameObject barrelRef = PlayerController.sInstance.GetBarrel();
         Vector3 startPosition = Camera.main.WorldToScreenPoint(barrelRef.transform.position);
-        Vector3 endPosition = Camera.main.WorldToScreenPoint(barrelRef.transform.position + barrelRef.transform.up * 60);
+        Vector3 endPosition = Camera.main.WorldToScreenPoint(barrelRef.transform.position + barrelRef.transform.up * 20);
 
         // project it onto a line
         reticlePosition = VectorUtil.ClampPoint(reticlePosition, startPosition, endPosition);
-        endPoint.transform.position = Camera.main.ScreenToWorldPoint(endPosition);
 
         transform.position = reticlePosition;
-
     }
 }

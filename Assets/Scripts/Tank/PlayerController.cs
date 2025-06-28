@@ -11,6 +11,7 @@ public class PlayerController : Tank
     // states
     bool canRotateCamera;
 
+
     // Serializes
     [Header("PlayerController - Refs")]
     [SerializeField] GameObject cameraRoot;
@@ -39,7 +40,7 @@ public class PlayerController : Tank
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         // movement
         MovementCode();
@@ -53,8 +54,17 @@ public class PlayerController : Tank
         CameraCode();
 
 
+    }
+
+    private void Update()
+    {
+        // consumables
+        ConsumableInput();
+
+
 
     }
+
 
     void MovementCode()
     {
@@ -90,7 +100,6 @@ public class PlayerController : Tank
         //bool objectHit = Physics.Raycast(mouse, Camera.main.transform.forward, out hit, 1000);
         
     }
-    
 
     void ShootInput()
     {
@@ -100,19 +109,18 @@ public class PlayerController : Tank
         }
     }
 
-
     void CameraCode()
     {
         cameraRoot.transform.position = transform.position;
 
         // rotate left
-        if (Input.GetKeyDown(KeyCode.Q) && canRotateCamera)
+        if (Input.GetKey(KeyCode.Q) && canRotateCamera)
         {
             StartCoroutine(RotateCamera(false));
         }
 
         // rotate right
-        if (Input.GetKeyDown(KeyCode.E) && canRotateCamera)
+        if (Input.GetKey(KeyCode.E) && canRotateCamera)
         {
             StartCoroutine(RotateCamera(true));
         }
@@ -146,8 +154,24 @@ public class PlayerController : Tank
         canRotateCamera = true;
     }
 
+    void ConsumableInput()
+    {
+        // cycle inventory input
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            CycleInventory(-1);
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            CycleInventory(1);
+        }
 
-    
+        // use cosnumable
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            TryUseConsumable();
+        }
+    }
 
 
 }

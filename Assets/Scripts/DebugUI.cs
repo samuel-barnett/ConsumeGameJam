@@ -28,7 +28,7 @@ public class DebugUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        text1.text = "time: " + PlayerController.sInstance.GetTimeSince();
+        text1.text = "items: " + PlayerController.sInstance.GetItemsHeldCount() + " | inventorySize: " + PlayerController.sInstance.GetInventorySize() + " | current: " + PlayerController.sInstance.GetCurrentItem();
         if (messagesSentHere > 1)
         {
             Debug.LogError("too many debugUI messages sent");
