@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8826123688946670532
+--- !u!1 &3643456074005214939
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,49 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1180750562811332018}
-  - component: {fileID: 1680059777984946658}
-  - component: {fileID: 8836530668654618848}
-  - component: {fileID: 5866755359893890260}
-  - component: {fileID: 7854534372987263949}
+  - component: {fileID: 1457456022299601109}
+  - component: {fileID: 8608499165842562938}
+  - component: {fileID: 8524262413577138396}
+  - component: {fileID: 2739606474707677991}
+  - component: {fileID: 5299535329975279344}
+  - component: {fileID: 9189824572902249119}
   m_Layer: 0
-  m_Name: Potion
-  m_TagString: Untagged
+  m_Name: ArtilleryBullet
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1180750562811332018
+--- !u!4 &1457456022299601109
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8826123688946670532}
+  m_GameObject: {fileID: 3643456074005214939}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.53729963, y: 0, z: 0, w: 0.8433914}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 90, y: 90, z: 90}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 31.71577, y: 0.5, z: 27.00151}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -65, y: 0, z: 0}
---- !u!33 &1680059777984946658
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &8608499165842562938
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8826123688946670532}
-  m_Mesh: {fileID: 70948873267775455, guid: 731be36224a6e904a859ce20f625f638, type: 3}
---- !u!23 &8836530668654618848
+  m_GameObject: {fileID: 3643456074005214939}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &8524262413577138396
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8826123688946670532}
+  m_GameObject: {fileID: 3643456074005214939}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -66,10 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 3831827580505511055, guid: 731be36224a6e904a859ce20f625f638, type: 3}
-  - {fileID: -3499885661075567493, guid: 731be36224a6e904a859ce20f625f638, type: 3}
-  - {fileID: -6725703680816290376, guid: 731be36224a6e904a859ce20f625f638, type: 3}
-  - {fileID: -876546973899608171, guid: 01826d180cdd46b49bb21131fa839837, type: 3}
+  - {fileID: 2100000, guid: 03051a9f4f25e2f469a84644a6428edc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91,13 +89,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &5866755359893890260
+--- !u!135 &2739606474707677991
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8826123688946670532}
+  m_GameObject: {fileID: 3643456074005214939}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -106,57 +104,55 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.01
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7854534372987263949
+--- !u!54 &5299535329975279344
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3643456074005214939}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &9189824572902249119
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8826123688946670532}
+  m_GameObject: {fileID: 3643456074005214939}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 846d408cdb000554e80fdb75257982e9, type: 3}
+  m_Script: {fileID: 11500000, guid: 01a3a04024428eb43add26d97da14612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 25
-  bobCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: -1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0.0005465121
-      outSlope: 0.0005465121
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.095948815
-    - serializedVersion: 3
-      time: 2
-      value: -1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 1
-    m_RotationOrder: 4
-  bobMagnitude: 0.01
-  duration: 5
+  damage: 4
+  gravityModifier: 0
+  minTargetRadius: 1
+  maxTargetRadius: 5
+  elevationToStart: 100
+  targetPrefab: {fileID: 6345512537114986286, guid: aa213faee46a88b47bc678ce13b7cd36, type: 3}
+  timeToDescend: 2

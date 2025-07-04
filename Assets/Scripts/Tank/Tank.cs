@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public enum Team
 {
@@ -21,6 +22,10 @@ public class Tank : MonoBehaviour
 
     public List<Consumable> consumables = new List<Consumable>();
     int currentConsumable = 0;
+
+    [Header("Tank - Mesh Refs")]
+    [SerializeField] protected Mesh headMouthClosed;
+    [SerializeField] protected Mesh headMouthOpen;
 
     [Header("Tank - Refs")]
     [SerializeField] protected GameObject swivel;
@@ -129,7 +134,7 @@ public class Tank : MonoBehaviour
         {
             GameObject obj = Instantiate(bulletPrefab);
             obj.transform.position = barrel.transform.position;
-            obj.GetComponent<Rigidbody>().AddForce(barrel.transform.up * projectileForce);
+            obj.GetComponent<Rigidbody>().AddForce(barrel.transform.forward * projectileForce);
             Bullet b = obj.GetComponent<Bullet>();
             b.SetTeam(team);
             timeSinceLastFire = 0;
@@ -174,6 +179,7 @@ public class Tank : MonoBehaviour
     {
         if (currentConsumable < consumables.Count && consumables[currentConsumable] && !consumables[currentConsumable].GetActivated())
         {
+            StartCoroutine("OpenMouth");
             consumables[currentConsumable].ActivateEffect();
             consumables.RemoveAt(0);
             currentConsumable--;
@@ -186,6 +192,15 @@ public class Tank : MonoBehaviour
 
 
         return false;
+    }
+
+    IEnumerator OpenMouth()
+    {
+        MeshFilter mf = head.GetComponent<MeshFilter>();
+
+        mf.mesh = headMouthOpen;
+        yield return new WaitForSeconds(1f);
+        mf.mesh = headMouthClosed;
     }
 
 

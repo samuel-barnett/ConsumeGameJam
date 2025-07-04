@@ -16,7 +16,7 @@ public class Reticle : MonoBehaviour
 
         GameObject barrelRef = PlayerController.sInstance.GetBarrel();
         Vector3 startPosition = Camera.main.WorldToScreenPoint(barrelRef.transform.position);
-        Vector3 endPosition = Camera.main.WorldToScreenPoint(barrelRef.transform.position + barrelRef.transform.up * 20);
+        Vector3 endPosition = Camera.main.WorldToScreenPoint(barrelRef.transform.position + barrelRef.transform.forward * 20);
 
         // project it onto a line
         reticlePosition = VectorUtil.ClampPoint(reticlePosition, startPosition, endPosition);

@@ -3,9 +3,17 @@ using UnityEngine;
 
 public class Consumable : MonoBehaviour
 {
+    float timeAlive;
+    bool bobAndRotate = true;
+
+
     float timeElapsed = 0;
 
     bool activated = false;
+
+    [SerializeField] float rotationSpeed = 10;
+    [SerializeField] AnimationCurve bobCurve;
+    [SerializeField] float bobMagnitude = 1;
 
     [SerializeField] float duration;
 
@@ -17,14 +25,29 @@ public class Consumable : MonoBehaviour
         mr = GetComponent<MeshRenderer>();
         sc = GetComponent<SphereCollider>();
 
+        // randomize rotation offset
+        transform.Rotate(new Vector3(0,Random.Range(0,360),0), Space.World);
+
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
+        if (bobAndRotate)
+        {
+            timeAlive += Time.fixedDeltaTime;
+            BobAndRotateItem();
+        }
+        
 
 
+    }
 
+
+    void BobAndRotateItem()
+    {
+        transform.Rotate(new Vector3(0, rotationSpeed * Time.fixedDeltaTime, 0), Space.World);
+        transform.position += new Vector3(0, bobCurve.Evaluate(timeAlive) * bobMagnitude, 0);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -38,6 +61,7 @@ public class Consumable : MonoBehaviour
             {
                 mr.enabled = false;
                 sc.enabled = false;
+                bobAndRotate = false;
             }
         }
     }
@@ -53,6 +77,7 @@ public class Consumable : MonoBehaviour
             {
                 mr.enabled = false;
                 sc.enabled = false;
+                bobAndRotate = false;
             }
         }
     }
