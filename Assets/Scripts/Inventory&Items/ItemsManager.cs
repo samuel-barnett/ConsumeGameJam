@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class ItemsManager : MonoBehaviour
 {
@@ -6,6 +8,7 @@ public class ItemsManager : MonoBehaviour
 
     [SerializeField] AnimationCurve itemBobCurve;
 
+    [SerializeField] List<GameObject> itemPrefabPool = new List<GameObject>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -24,6 +27,12 @@ public class ItemsManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public GameObject SpawnRandomItem()
+    {
+        GameObject prefab = itemPrefabPool[Random.Range(0, itemPrefabPool.Count)];
+        return Instantiate(prefab);
     }
 
     public AnimationCurve GetItemBobCurve()

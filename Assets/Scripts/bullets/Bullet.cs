@@ -43,7 +43,7 @@ public class Bullet : MonoBehaviour
         //explosion.Setup(explosionRadius, damage, bulletTeam);
         //explosion.transform.position = transform.position;
 
-        //bool damaage = false;
+
 
         Collider[] hits = Physics.OverlapSphere(transform.position, explosionRadius);
         foreach (Collider hit in hits)
@@ -51,17 +51,9 @@ public class Bullet : MonoBehaviour
             Tank tank = hit.gameObject.GetComponent<Tank>();
             if (tank && tank.GetTeam() != bulletTeam)
             {
-                //Debug.DrawLine(transform.position, hit.transform.position, Color.red);
                 tank.TakeDamage(damage, bulletID);
-                //damaage = true;
             }
         }
-        /*
-        if (damaage)
-        {
-            Debug.Break();
-        }
-        */
 
         /*
         Shield shield = collision.gameObject.GetComponent<Shield>();
@@ -70,6 +62,15 @@ public class Bullet : MonoBehaviour
             shield.TakeDamage(damage);
         }
         */
+
+        //GameObject obj = Instantiate(ItemsManager.sInstance.GetExplosionPrefab());
+        //obj.transform.position = transform.position;
+
+        if (!(this is ArtilleryBullet))
+        {
+            ParticleManager.sInstance.SpawnParticleAtPosition(ParticleType.EXPLODE, transform.position);
+        }
+        
 
         Destroy(gameObject);
     }

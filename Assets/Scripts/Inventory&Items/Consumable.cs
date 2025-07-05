@@ -51,6 +51,7 @@ public class Consumable : MonoBehaviour
         transform.position += new Vector3(0, ItemsManager.sInstance.GetItemBobCurve().Evaluate(timeAlive) * bobMagnitude, 0);
     }
 
+    /*
     private void OnCollisionEnter(Collision collision)
     {
         Tank tank = collision.gameObject.GetComponent<Tank>();
@@ -66,6 +67,7 @@ public class Consumable : MonoBehaviour
             }
         }
     }
+    */
 
     private void OnTriggerEnter(Collider other)
     {
@@ -79,6 +81,10 @@ public class Consumable : MonoBehaviour
                 mr.enabled = false;
                 sc.enabled = false;
                 bobAndRotate = false;
+                if (transform.childCount > 0)
+                {
+                    Destroy(transform.GetChild(0).gameObject);
+                }
             }
         }
     }

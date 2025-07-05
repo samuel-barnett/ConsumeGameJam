@@ -10,17 +10,19 @@ public class OrangePotion : Consumable
     {
         base.ActivateEffect(tank);
 
-        Bullet bulletPrefabToChange = tank.GetBulletPrefab().GetComponent<Bullet>();
-        bulletPrefabToChange.AddDamage(damageIncrease);
-        bulletPrefabToChange.AddRange(rangeIncrease);
+        tank.AddExplosiveRounds(1);
+        //Bullet bulletPrefabToChange = tank.GetBulletPrefab().GetComponent<Bullet>();
+        //bulletPrefabToChange.AddDamage(damageIncrease);
+        //bulletPrefabToChange.AddRange(rangeIncrease);
     }
 
 
     public override void DeactivateEffect(Tank tank)
     {
-        Bullet bulletPrefabToChange = tank.GetBulletPrefab().GetComponent<Bullet>();
-        bulletPrefabToChange.AddDamage(-damageIncrease);
-        bulletPrefabToChange.AddRange(-rangeIncrease);
+        //Bullet bulletPrefabToChange = tank.GetBulletPrefab().GetComponent<Bullet>();
+        //bulletPrefabToChange.AddDamage(-damageIncrease);
+        //bulletPrefabToChange.AddRange(-rangeIncrease);
+        tank.AddExplosiveRounds(-1);
         base.DeactivateEffect(tank);
     }
 

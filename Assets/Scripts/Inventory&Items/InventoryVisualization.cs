@@ -7,10 +7,14 @@ public class InventoryVisualization : MonoBehaviour
 {
     public static InventoryVisualization sInstance { get; private set; }
 
-    List<Image> inventorySlots = new List<Image>();
+    List<GameObject> inventorySlots = new List<GameObject>();
 
     [SerializeField] GameObject InventoryHoverCursor;
 
+    [SerializeField] Sprite blueSprite;
+    [SerializeField] Sprite greenSprite;
+    [SerializeField] Sprite orangeSprite;
+    [SerializeField] Sprite purpleSprite;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,28 +32,54 @@ public class InventoryVisualization : MonoBehaviour
         // setup slots
         for (int i = 0; i < transform.childCount; i++)
         {
-            inventorySlots.Add(transform.GetChild(i).gameObject.GetComponent<Image>());
+            inventorySlots.Add(transform.GetChild(i).gameObject);
         }
 
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        foreach (Image item in inventorySlots)
+        foreach (GameObject item in inventorySlots)
         {
+            Image image = item.transform.GetChild(0).GetComponent<Image>();
             int index = inventorySlots.IndexOf(item);
             if (item != null && index < PlayerController.sInstance.GetInventorySize())
             {
-                if (PlayerController.sInstance.GetItemAtIndex(index))
+                GameObject obj = PlayerController.sInstance.GetItemAtIndex(index);
+
+                if (obj)
                 {
-                    item.color = Color.green;
+                    image.enabled = true;
+                    Consumable consumable = obj.GetComponent<Consumable>();
+                    if (consumable)
+                    {
+                        if (consumable is BluePotion)
+                        {
+                            image.sprite = blueSprite;
+                        }
+                        else if (consumable is GreenPotion)
+                        {
+                            image.sprite = greenSprite;
+                        }
+                        else if (consumable is OrangePotion)
+                        {
+                            image.sprite = orangeSprite;
+                        }
+                        else if (consumable is PurplePotion)
+                        {
+                            image.sprite = purpleSprite;
+                        }
+                        else
+                        {
+                            Debug.LogError("noooooooo");
+                        }
+                    }
                 }
                 else
                 {
-                    item.color = Color.white;
+                    image.enabled = false;
                 }
-                
+
                 if (index == PlayerController.sInstance.GetCurrentItem())
                 {
                     InventoryHoverCursor.transform.position = item.transform.position;

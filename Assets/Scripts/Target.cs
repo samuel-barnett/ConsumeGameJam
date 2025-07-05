@@ -15,6 +15,7 @@ public class Target : MonoBehaviour
     {
         if (bulletRef == null)
         {
+            ParticleManager.sInstance.SpawnParticleAtPosition(ParticleType.ARTILLERY, transform.position);
             Destroy(gameObject);
         }
     }

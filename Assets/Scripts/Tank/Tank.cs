@@ -22,9 +22,10 @@ public class Tank : MonoBehaviour
 
     List<int> damageToMe = new List<int>();
 
-    //
+    // abilities
     bool canDrink;
     bool shielded;
+    int explosiveLevel;
 
 
     public List<Consumable> consumables = new List<Consumable>();
@@ -160,6 +161,14 @@ public class Tank : MonoBehaviour
             obj.GetComponent<Rigidbody>().AddForce(barrel.transform.forward * projectileForce);
             Bullet b = obj.GetComponent<Bullet>();
             b.SetTeam(team);
+            if (explosiveLevel > 0)
+            {
+                b.AddDamage(explosiveLevel * 3);
+                b.AddRange(explosiveLevel * 2);
+            }
+            GameObject shootParticle = ParticleManager.sInstance.SpawnParticleAtPosition(ParticleType.SHOOT, barrel.transform.position + (barrel.transform.forward * 4));
+            shootParticle.transform.rotation = barrel.transform.rotation;
+
             timeSinceLastFire = 0;
         }
     }
@@ -278,17 +287,16 @@ public class Tank : MonoBehaviour
         return inventorySize;
     }
 
-    public GameObject GetBulletPrefab()
-    {
-        return bulletPrefab;
-    }
-
     // abilities
     public void SetShielded(bool newShielded)
     {
         shielded = newShielded;
     }
 
+    public void AddExplosiveRounds(int explosiveLevelAdditive)
+    {
+        explosiveLevel += explosiveLevelAdditive;
+    }
 
 
 
