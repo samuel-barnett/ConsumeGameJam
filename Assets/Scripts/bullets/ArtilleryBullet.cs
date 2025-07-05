@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class ArtilleryBullet : Bullet
 {
+    [Header("Artillery Bullet")]
     [SerializeField] float minTargetRadius;
     [SerializeField] float maxTargetRadius;
 

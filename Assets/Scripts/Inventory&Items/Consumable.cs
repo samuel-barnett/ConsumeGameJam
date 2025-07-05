@@ -11,8 +11,9 @@ public class Consumable : MonoBehaviour
 
     bool activated = false;
 
+    [SerializeField] Mesh pourMesh;
+
     [SerializeField] float rotationSpeed = 10;
-    [SerializeField] AnimationCurve bobCurve;
     [SerializeField] float bobMagnitude = 1;
 
     [SerializeField] float duration;
@@ -47,7 +48,7 @@ public class Consumable : MonoBehaviour
     void BobAndRotateItem()
     {
         transform.Rotate(new Vector3(0, rotationSpeed * Time.fixedDeltaTime, 0), Space.World);
-        transform.position += new Vector3(0, bobCurve.Evaluate(timeAlive) * bobMagnitude, 0);
+        transform.position += new Vector3(0, ItemsManager.sInstance.GetItemBobCurve().Evaluate(timeAlive) * bobMagnitude, 0);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -82,32 +83,30 @@ public class Consumable : MonoBehaviour
         }
     }
 
-    public virtual void ActivateEffect()
+    public virtual void ActivateEffect(Tank tank)
     {
         Debug.Log("Effect Begin");
         activated = true;
-        StartCoroutine(SetTimerForDuration());
+        bobAndRotate = false;
 
+        MeshFilter mf = gameObject.GetComponent<MeshFilter>();
+        mf.mesh = pourMesh;
 
-
-
+        StartCoroutine(SetTimerForDuration(tank));
     }
 
-    IEnumerator SetTimerForDuration()
+    IEnumerator SetTimerForDuration(Tank tank)
     {
-
         while (timeElapsed < duration)
         {
             timeElapsed += Time.fixedDeltaTime;
 
             yield return new WaitForSeconds(Time.fixedDeltaTime);
         }
-        
-        DeactivateEffect();
+        DeactivateEffect(tank);
     }
 
-
-    public virtual void DeactivateEffect()
+    public virtual void DeactivateEffect(Tank tank)
     {
         Debug.Log("Effect Over");
 

@@ -32,6 +32,37 @@ Transform:
   - {fileID: 7893181939974454444}
   m_Father: {fileID: 5274328472724399346}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5814336966012179028
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 259848724825617109}
+  m_Layer: 0
+  m_Name: MouthPour
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &259848724825617109
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5814336966012179028}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.527, z: 1.803}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7700706164833208237}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6028352723757545058
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,7 +317,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.967, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 259848724825617109}
   m_Father: {fileID: 3472514460702233971}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1690668972474247501
@@ -591,12 +623,14 @@ MonoBehaviour:
   swivel: {fileID: 8074402069104597420}
   barrel: {fileID: 6634756660632381389}
   head: {fileID: 7827580723259330429}
+  mouthPour: {fileID: 5814336966012179028}
   bulletPrefab: {fileID: 7414353819678839670, guid: d3b68cb36bdba4a468598d29214c66e3, type: 3}
   maxHP: 20
   movementAcceleration: 5
   speedLimit: 5
   steeringSpeed: 90
   inventorySize: 4
+  drinkSpeed: 1
   fireRate: 0.5
   projectileForce: 200
   cameraRoot: {fileID: 331575992550813444}

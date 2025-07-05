@@ -150,6 +150,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 4
+  explosionRadius: 1
+  explosionPrefab: {fileID: 1754934478356031003, guid: b18709eccfa63e64dbc10df3dfe6cf46, type: 3}
   gravityModifier: 0
   minTargetRadius: 1
   maxTargetRadius: 5

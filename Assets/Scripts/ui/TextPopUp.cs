@@ -1,20 +1,22 @@
 using TMPro;
 using UnityEngine;
 
-[RequireComponent(typeof(TextMeshPro))]
+[RequireComponent(typeof(TextMeshProUGUI))]
 public class TextPopUp : MonoBehaviour
 {
     float timeAlive;
 
     Color textColor;
-    TextMeshPro textRef;
+    TextMeshProUGUI textRef;
 
+    Vector3 originalPosition;
     Vector3 velocity;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        textRef = GetComponent<TextMeshPro>();
+        originalPosition = transform.position;
+        textRef = GetComponent<TextMeshProUGUI>();
         textColor = textRef.color;
         velocity = new Vector3(Random.Range(-0.5f, 0.5f), 1, 0);
     }
@@ -25,10 +27,13 @@ public class TextPopUp : MonoBehaviour
         timeAlive += Time.deltaTime;
 
         // look at camera
-        transform.LookAt(transform.position - Camera.main.transform.position, Vector3.up);
+        //transform.LookAt(transform.position - Camera.main.transform.position, Vector3.up);
 
         // move
+        //originalPosition
+        transform.position = Camera.main.WorldToScreenPoint(originalPosition);
         transform.Translate(velocity * Time.deltaTime);
+        originalPosition += (velocity * Time.deltaTime);
 
         // lower opacity
         textColor.a = TextPopUpSpawner.sInstance.EvaluateOpacity(timeAlive);

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7491069766592198998}
   - component: {fileID: 4557356456775235165}
   m_Layer: 0
-  m_Name: Bullet 1
+  m_Name: Enemy Bullet
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -151,6 +151,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+  explosionRadius: 1
+  explosionPrefab: {fileID: 1754934478356031003, guid: b18709eccfa63e64dbc10df3dfe6cf46, type: 3}
   gravityModifier: 0.8
 --- !u!96 &4557356456775235165
 TrailRenderer:

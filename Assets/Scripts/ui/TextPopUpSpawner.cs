@@ -34,8 +34,8 @@ public class TextPopUpSpawner : MonoBehaviour
 
     void SpawnPopUp(string message, Vector3 position, Color color)
     {
-        GameObject obj = Instantiate(TextPopUpPrefab);
-        TextMeshPro text = obj.GetComponent<TextMeshPro>();
+        GameObject obj = Instantiate(TextPopUpPrefab, transform);
+        TextMeshProUGUI text = obj.GetComponent<TextMeshProUGUI>();
         obj.transform.position = position;
         text.text = message;
         text.color = color;
@@ -46,11 +46,16 @@ public class TextPopUpSpawner : MonoBehaviour
         SpawnPopUp(damage.ToString(), position, Color.red);
     }
 
+    public void ShieldDamagePopUp(int damage, Vector3 position)
+    {
+        SpawnPopUp(damage.ToString(), position, Color.blue);
+    }
+
     public void HealPopUp(int heal, Vector3 position)
     {
         SpawnPopUp(heal.ToString(), position, Color.green);
     }
 
-
+    
 
 }

@@ -147,7 +147,7 @@ public class EnemyTankBehavior : Tank
     {
         RaycastHit hit;
         bool objectHit = Physics.Raycast(transform.position, PlayerController.sInstance.transform.position - transform.position, out hit, 1000);
-        if (objectHit && hit.collider.gameObject.GetComponent<PlayerController>())
+        if (objectHit && hit.collider.gameObject.GetComponent<PlayerController>() || hit.collider.gameObject.GetComponent<Shield>())
         {
             TryShootProjectile();
         }

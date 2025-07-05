@@ -1,9 +1,8 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class Target : MonoBehaviour
+public class MenuButtons : MonoBehaviour
 {
-    GameObject bulletRef;
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -13,17 +12,23 @@ public class Target : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (bulletRef == null)
-        {
-            Destroy(gameObject);
-        }
+        
     }
 
 
-    public void SetRef(GameObject bullet)
+    public void OpenScene(string sceneName)
     {
-        bulletRef = bullet;
+        SceneManager.LoadScene(sceneName);
     }
+
+
+    public void CloseGame()
+    {
+        Application.Quit();
+    }
+
+
+
 
 
 }

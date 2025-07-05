@@ -20,6 +20,13 @@ public class Tank : MonoBehaviour
     int currentHP;
     float timeSinceLastFire;
 
+    List<int> damageToMe = new List<int>();
+
+    //
+    bool canDrink;
+    bool shielded;
+
+
     public List<Consumable> consumables = new List<Consumable>();
     int currentConsumable = 0;
 
@@ -31,6 +38,7 @@ public class Tank : MonoBehaviour
     [SerializeField] protected GameObject swivel;
     [SerializeField] protected GameObject barrel;
     [SerializeField] protected GameObject head;
+    [SerializeField] protected GameObject mouthPour;
 
     [Header("Tank - Prefabs")]
     [SerializeField] GameObject bulletPrefab;
@@ -42,7 +50,7 @@ public class Tank : MonoBehaviour
     [SerializeField] float speedLimit;
     [SerializeField] float steeringSpeed;
     [SerializeField] int inventorySize = 4;
-
+    [SerializeField] float drinkSpeed = 1;
 
     [SerializeField] float fireRate = 1;
     [SerializeField] float projectileForce;
@@ -58,6 +66,7 @@ public class Tank : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         currentHP = maxHP;
         timeSinceLastFire = fireRate;
+        canDrink = true;
     }
 
     // Update is called once per frame
@@ -66,9 +75,23 @@ public class Tank : MonoBehaviour
 
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, int damageID)
     {
-        //Debug.Log("Taking " + damage + " damage");
+        if (damageToMe.Contains(damageID))
+        {
+            return;
+        }
+        else
+        {
+            damageToMe.Add(damageID);
+        }
+
+        if (shielded)
+        {
+            return;
+        }
+
+        Debug.Log("Taking " + damage + " damage");
         currentHP -= damage;
         TextPopUpSpawner.sInstance.DamagePopUp(damage, transform.position + (Vector3.up * 4));
         if (currentHP <= 0)
@@ -177,11 +200,19 @@ public class Tank : MonoBehaviour
 
     public bool TryUseConsumable()
     {
-        if (currentConsumable < consumables.Count && consumables[currentConsumable] && !consumables[currentConsumable].GetActivated())
+        if (currentConsumable < consumables.Count && consumables[currentConsumable] && !consumables[currentConsumable].GetActivated() && canDrink)
         {
-            StartCoroutine("OpenMouth");
-            consumables[currentConsumable].ActivateEffect();
-            consumables.RemoveAt(0);
+            Consumable current = consumables[currentConsumable];
+            MeshRenderer consumableMR = current.gameObject.GetComponent<MeshRenderer>();
+            StartCoroutine(OpenMouth(consumableMR));
+
+            current.ActivateEffect(this);
+            current.transform.SetParent(mouthPour.transform);
+            current.transform.localPosition = Vector3.zero;
+            current.transform.localRotation = Quaternion.identity;
+            current.transform.Rotate(new Vector3(30, 180, -90));
+
+            consumables.RemoveAt(currentConsumable);
             currentConsumable--;
             if (currentConsumable < 0)
             {
@@ -194,13 +225,17 @@ public class Tank : MonoBehaviour
         return false;
     }
 
-    IEnumerator OpenMouth()
+    IEnumerator OpenMouth(MeshRenderer consumableMR)
     {
         MeshFilter mf = head.GetComponent<MeshFilter>();
 
         mf.mesh = headMouthOpen;
-        yield return new WaitForSeconds(1f);
+        consumableMR.enabled = true;
+        canDrink = false;
+        yield return new WaitForSeconds(drinkSpeed);
         mf.mesh = headMouthClosed;
+        consumableMR.enabled = false;
+        canDrink = true;
     }
 
 
@@ -242,6 +277,19 @@ public class Tank : MonoBehaviour
     {
         return inventorySize;
     }
+
+    public GameObject GetBulletPrefab()
+    {
+        return bulletPrefab;
+    }
+
+    // abilities
+    public void SetShielded(bool newShielded)
+    {
+        shielded = newShielded;
+    }
+
+
 
 
 }
