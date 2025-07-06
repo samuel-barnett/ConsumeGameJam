@@ -14,7 +14,7 @@ public class BluePotion : Consumable
         shieldInstance = Instantiate(shieldPrefab);
         Shield shield = shieldInstance.GetComponent<Shield>();
         shield.SetTank(tank);
-        shieldInstance.transform.SetParent(PlayerController.sInstance.transform);
+        shieldInstance.transform.SetParent(tank.gameObject.transform);
         shieldInstance.transform.localPosition = Vector3.zero;
         tank.SetShielded(true);
     }

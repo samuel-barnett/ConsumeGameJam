@@ -24,7 +24,7 @@ public class SaveManager : MonoBehaviour
 
     public void SetLevelsUnlocked(int newLevelsUnlocked)
     {
-        PlayerPrefs.SetInt("LevelsUnlocked", newLevelsUnlocked);
+        PlayerPrefs.SetInt("LevelsUnlocked", PlayerPrefs.GetInt("LevelsUnlocked") + newLevelsUnlocked);
     }
 
     public int GetLevelsUnlocked()

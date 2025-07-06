@@ -95,7 +95,10 @@ public class Consumable : MonoBehaviour
         activated = true;
         bobAndRotate = false;
 
-        PotionBarsCollection.sInstance.AddBar(this);
+        if (tank is PlayerController)
+        {
+            PotionBarsCollection.sInstance.AddBar(this);
+        }
 
         MeshFilter mf = gameObject.GetComponent<MeshFilter>();
         mf.mesh = pourMesh;

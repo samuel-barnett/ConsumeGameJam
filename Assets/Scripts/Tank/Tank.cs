@@ -100,6 +100,12 @@ public class Tank : MonoBehaviour
             return;
         }
 
+        if (!controlEnabled)
+        {
+            return;
+        }
+
+
         //Debug.Log("Taking " + damage + " damage");
         currentHP -= damage;
         TextPopUpSpawner.sInstance.DamagePopUp(damage, transform.position + (Vector3.up * 4));
@@ -123,7 +129,7 @@ public class Tank : MonoBehaviour
         {
             // drop items
             GameObject item = ItemsManager.sInstance.SpawnRandomItem();
-            item.transform.position = transform.position;
+            item.transform.position = transform.position + Vector3.up;
             WinTracker.sInstance.RemoveTankFromTracker(this as EnemyTankBehavior);
             Destroy(gameObject);
         }
@@ -252,7 +258,7 @@ public class Tank : MonoBehaviour
             current.transform.SetParent(mouthPour.transform);
             current.transform.localPosition = Vector3.zero;
             current.transform.localRotation = Quaternion.identity;
-            current.transform.Rotate(new Vector3(30, 180, -90));
+            current.transform.Rotate(new Vector3(-90, 0, 0));
 
             consumables.RemoveAt(currentConsumable);
             currentConsumable--;
