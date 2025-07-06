@@ -20,7 +20,7 @@ public class MenuButtons : MonoBehaviour
         {
             sInstance = this;
         }
-        sInstance.gameObject.SetActive(false);
+        //sInstance.gameObject.SetActive(false);
     }
 
     // Update is called once per frame

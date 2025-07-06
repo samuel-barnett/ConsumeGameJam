@@ -78,35 +78,13 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 1
     m_RotationOrder: 4
-  potionBarDrain:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: -1
-      outSlope: -1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -1
-      outSlope: -1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   itemPrefabPool:
   - {fileID: 5297081814614986860, guid: 3972e10beef0d1a49bd592d5d5c513f9, type: 3}
   - {fileID: 2119171682593658308, guid: 9024b3bc20726054eaf139d7a2f9cfdb, type: 3}
   - {fileID: 918212233186987296, guid: eed5c7ffe82fe9e4488b4c00a8b54966, type: 3}
   - {fileID: 4799014966630384435, guid: 903c655c480ae1442875f8657ab8bc8b, type: 3}
+  normalMaterial: {fileID: 2100000, guid: 0e70686fe7febc94a88ccb5014bd1d91, type: 2}
+  ghostMaterial: {fileID: 2100000, guid: 98c7293906ad1d4458a19332f7bb8ac5, type: 2}
 --- !u!114 &7429931190695384507
 MonoBehaviour:
   m_ObjectHideFlags: 0

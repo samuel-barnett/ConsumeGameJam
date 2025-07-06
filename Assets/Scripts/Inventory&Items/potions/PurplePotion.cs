@@ -9,12 +9,13 @@ public class PurplePotion : Consumable
     {
         base.ActivateEffect(tank);
 
-
+        tank.SetGhostMode(1);
     }
 
 
     public override void DeactivateEffect(Tank tank)
     {
+        tank.SetGhostMode(-1);
 
         base.DeactivateEffect(tank);
     }

@@ -7,9 +7,12 @@ public class ItemsManager : MonoBehaviour
     public static ItemsManager sInstance { get; private set; }
 
     [SerializeField] AnimationCurve itemBobCurve;
-    [SerializeField] AnimationCurve potionBarDrain;
 
     [SerializeField] List<GameObject> itemPrefabPool = new List<GameObject>();
+
+    [SerializeField] Material normalMaterial;
+    [SerializeField] Material ghostMaterial;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -41,10 +44,13 @@ public class ItemsManager : MonoBehaviour
         return itemBobCurve;
     }
 
-    public float EvaluatePotionDrain(float time)
+    public Material GetNormalMaterial()
     {
-        return potionBarDrain.Evaluate(time);
+        return normalMaterial;
     }
-
+    public Material GetGhostMaterial()
+    {
+        return ghostMaterial;
+    }
 
 }

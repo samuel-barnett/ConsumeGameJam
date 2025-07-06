@@ -29,7 +29,7 @@ public class Tank : MonoBehaviour
     bool shielded;
     int explosiveLevel;
     float speedLevel = 1;
-
+    int ghostMode;
 
     protected List<Consumable> consumables = new List<Consumable>();
     protected int currentConsumable = 0;
@@ -71,6 +71,11 @@ public class Tank : MonoBehaviour
         currentHP = maxHP;
         timeSinceLastFire = fireRate;
         canDrink = true;
+
+        if (this is PlayerController)
+        {
+            HPBar.sInstance.UpdateHealthDisplay(currentHP, maxHP);
+        }
     }
 
     // Update is called once per frame
@@ -90,7 +95,7 @@ public class Tank : MonoBehaviour
             damageToMe.Add(damageID);
         }
 
-        if (shielded)
+        if (shielded || ghostMode > 0)
         {
             return;
         }
@@ -98,6 +103,12 @@ public class Tank : MonoBehaviour
         //Debug.Log("Taking " + damage + " damage");
         currentHP -= damage;
         TextPopUpSpawner.sInstance.DamagePopUp(damage, transform.position + (Vector3.up * 4));
+
+        if (this is PlayerController)
+        {
+            HPBar.sInstance.UpdateHealthDisplay(currentHP, maxHP);
+        }
+
         if (currentHP <= 0)
         {
             Die();
@@ -113,6 +124,7 @@ public class Tank : MonoBehaviour
             // drop items
             GameObject item = ItemsManager.sInstance.SpawnRandomItem();
             item.transform.position = transform.position;
+            WinTracker.sInstance.RemoveTankFromTracker(this as EnemyTankBehavior);
             Destroy(gameObject);
         }
         else if (this is PlayerController)
@@ -307,6 +319,11 @@ public class Tank : MonoBehaviour
         return inventorySize;
     }
 
+    public void SetControlEnabled(bool newControl)
+    {
+        controlEnabled = newControl;
+    }
+
     public bool GetControlEnabled()
     {
         return controlEnabled;
@@ -316,6 +333,48 @@ public class Tank : MonoBehaviour
     public void SetShielded(bool newShielded)
     {
         shielded = newShielded;
+    }
+    public void SetGhostMode(int ghostModeAdditive)
+    {
+        ghostMode += ghostModeAdditive;
+        if (ghostMode > 0)
+        {
+            MeshRenderer tankMR = GetComponent<MeshRenderer>();
+            MeshRenderer turretMR = swivel.GetComponent<MeshRenderer>();
+            MeshRenderer barrelMR = barrel.GetComponent<MeshRenderer>();
+            MeshRenderer headMR = head.GetComponent<MeshRenderer>();
+
+            tankMR.material = ItemsManager.sInstance.GetGhostMaterial();
+            turretMR.material = ItemsManager.sInstance.GetGhostMaterial();
+            barrelMR.material = ItemsManager.sInstance.GetGhostMaterial();
+            headMR.material = ItemsManager.sInstance.GetGhostMaterial();
+
+            BoxCollider bc = GetComponent<BoxCollider>();
+            SphereCollider sc = GetComponent<SphereCollider>();
+            bc.isTrigger = true;
+            sc.isTrigger = true;
+
+            rb.useGravity = false;
+        }
+        else
+        {
+            MeshRenderer tankMR = GetComponent<MeshRenderer>();
+            MeshRenderer turretMR = swivel.GetComponent<MeshRenderer>();
+            MeshRenderer barrelMR = barrel.GetComponent<MeshRenderer>();
+            MeshRenderer headMR = head.GetComponent<MeshRenderer>();
+
+            tankMR.material = ItemsManager.sInstance.GetNormalMaterial();
+            turretMR.material = ItemsManager.sInstance.GetNormalMaterial();
+            barrelMR.material = ItemsManager.sInstance.GetNormalMaterial();
+            headMR.material = ItemsManager.sInstance.GetNormalMaterial();
+
+            BoxCollider bc = GetComponent<BoxCollider>();
+            SphereCollider sc = GetComponent<SphereCollider>();
+            bc.isTrigger = false;
+            sc.isTrigger = false;
+
+            //rb.useGravity = true;
+        }
     }
 
     public void AddExplosiveRounds(int explosiveLevelAdditive)

@@ -31,6 +31,7 @@ public class EnemyTankBehavior : Tank
     {
         base.SetupEntity();
 
+        WinTracker.sInstance.AddTankToTracker(this);
         team = Team.ENEMY;
     }
 

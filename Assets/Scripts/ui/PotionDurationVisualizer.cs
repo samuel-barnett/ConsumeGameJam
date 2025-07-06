@@ -25,8 +25,6 @@ public class PotionDurationVisualizer : MonoBehaviour
         float value = (timeElapsed - duration) / (0 - duration);
         bar.transform.localScale = new Vector3(value, 1, 1);
 
-
-
         if (timeElapsed >= duration)
         {
             Destroy(gameObject);
