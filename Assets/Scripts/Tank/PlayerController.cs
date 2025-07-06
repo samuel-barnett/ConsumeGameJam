@@ -42,6 +42,11 @@ public class PlayerController : Tank
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (!controlEnabled)
+        {
+            return;
+        }
+
         // movement
         MovementCode();
         SwivelRotation();
@@ -157,11 +162,12 @@ public class PlayerController : Tank
     void ConsumableInput()
     {
         // cycle inventory input
-        if (Input.GetKeyDown(KeyCode.Z))
+        float scroll = Input.GetAxisRaw("Mouse ScrollWheel");
+        if (Input.GetKeyDown(KeyCode.Z) || scroll > 0)
         {
             CycleInventory(-1);
         }
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C) || scroll < 0)
         {
             CycleInventory(1);
         }

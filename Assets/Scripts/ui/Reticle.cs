@@ -11,12 +11,17 @@ public class Reticle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!PlayerController.sInstance.GetControlEnabled())
+        {
+            Cursor.visible = true;
+            Destroy(gameObject);
+        }
         // get positions
         Vector3 reticlePosition = Input.mousePosition;
 
         GameObject barrelRef = PlayerController.sInstance.GetBarrel();
         Vector3 startPosition = Camera.main.WorldToScreenPoint(barrelRef.transform.position);
-        Vector3 endPosition = Camera.main.WorldToScreenPoint(barrelRef.transform.position + barrelRef.transform.forward * 20);
+        Vector3 endPosition = Camera.main.WorldToScreenPoint(barrelRef.transform.position + barrelRef.transform.forward * 50);
 
         // project it onto a line
         reticlePosition = VectorUtil.ClampPoint(reticlePosition, startPosition, endPosition);

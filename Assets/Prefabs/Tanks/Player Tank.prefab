@@ -565,7 +565,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8748496530764389438}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 100
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -617,7 +617,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae38453baee22354e9311e891ee3c83a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  consumables: []
   headMouthClosed: {fileID: -2432090755550338912, guid: 53d6cc3382dca5549af223a15f15891d, type: 3}
   headMouthOpen: {fileID: -2432090755550338912, guid: 4b877e3eeb7a8cc4d84701e2bfcf7ec5, type: 3}
   swivel: {fileID: 8074402069104597420}
@@ -625,7 +624,7 @@ MonoBehaviour:
   head: {fileID: 7827580723259330429}
   mouthPour: {fileID: 5814336966012179028}
   bulletPrefab: {fileID: 7414353819678839670, guid: d3b68cb36bdba4a468598d29214c66e3, type: 3}
-  maxHP: 20
+  maxHP: 5
   movementAcceleration: 5
   speedLimit: 5
   steeringSpeed: 90

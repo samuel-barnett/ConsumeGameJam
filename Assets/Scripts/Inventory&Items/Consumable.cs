@@ -91,9 +91,11 @@ public class Consumable : MonoBehaviour
 
     public virtual void ActivateEffect(Tank tank)
     {
-        Debug.Log("Effect Begin");
+        //Debug.Log("Effect Begin");
         activated = true;
         bobAndRotate = false;
+
+        PotionBarsCollection.sInstance.AddBar(this);
 
         MeshFilter mf = gameObject.GetComponent<MeshFilter>();
         mf.mesh = pourMesh;
@@ -114,7 +116,7 @@ public class Consumable : MonoBehaviour
 
     public virtual void DeactivateEffect(Tank tank)
     {
-        Debug.Log("Effect Over");
+        //Debug.Log("Effect Over");
 
 
 
@@ -125,5 +127,11 @@ public class Consumable : MonoBehaviour
     {
         return activated;
     }
+
+    public float GetDuration()
+    {
+        return duration;
+    }
+
 
 }

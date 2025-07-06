@@ -7,7 +7,9 @@ public enum ParticleType
     EXPLODE,
     BIG_EXPLODE,
     ARTILLERY,
-    BIG_ARTILLERY
+    BIG_ARTILLERY,
+    TANK_DEATH,
+    FIRE
 }
 
 
@@ -21,6 +23,8 @@ public class ParticleManager : MonoBehaviour
     [SerializeField] GameObject bixExplosionParticle;
     [SerializeField] GameObject artilleryParticle;
     [SerializeField] GameObject bigArtilleryParticle;
+    [SerializeField] GameObject tankDeathParticle;
+    [SerializeField] GameObject fireParticle;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -44,23 +48,37 @@ public class ParticleManager : MonoBehaviour
     public GameObject SpawnParticleAtPosition(ParticleType type, Vector3 position)
     {
         GameObject prefab = null;
+        bool destroyParticleWhenDone = false;
 
         switch (type)
         {
             case ParticleType.SHOOT:
                 prefab = shootParticle;
+                destroyParticleWhenDone = true;
                 break;
             case ParticleType.EXPLODE:
                 prefab = explosionParticle;
+                destroyParticleWhenDone = true;
                 break;
             case ParticleType.BIG_EXPLODE:
                 prefab = bixExplosionParticle;
+                destroyParticleWhenDone = true;
                 break;
             case ParticleType.ARTILLERY:
                 prefab = artilleryParticle;
+                destroyParticleWhenDone = true;
                 break;
             case ParticleType.BIG_ARTILLERY:
                 prefab = bigArtilleryParticle;
+                destroyParticleWhenDone = true;
+                break;
+            case ParticleType.TANK_DEATH:
+                prefab = tankDeathParticle;
+                destroyParticleWhenDone = true;
+                break;
+            case ParticleType.FIRE:
+                prefab = fireParticle;
+                destroyParticleWhenDone = false;
                 break;
             default:
                 return null;
@@ -70,7 +88,10 @@ public class ParticleManager : MonoBehaviour
         if (prefab)
         {
             obj = Instantiate(prefab);
-            StartCoroutine(DeleteWhenDone(obj));
+            if (destroyParticleWhenDone)
+            {
+                StartCoroutine(DeleteWhenDone(obj));
+            }
             obj.transform.position = position;
         }
         return obj;

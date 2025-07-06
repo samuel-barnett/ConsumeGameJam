@@ -8,7 +8,8 @@ public enum EnemyMoveState
     STANDBY,
     DECIDE_DESTINATION,
     MOVING,
-    WAIT
+    WAIT,
+    DRINK_POTION
 }
 
 
@@ -55,6 +56,10 @@ public class EnemyTankBehavior : Tank
             case EnemyMoveState.WAIT:
                 float timeToWait = Random.Range(randomWaitMinTime, randomWaitMaxTime);
                 StartCoroutine(WaitInPlace(timeToWait));
+                break;
+            case EnemyMoveState.DRINK_POTION:
+                TryUseConsumable();
+                currentState = EnemyMoveState.WAIT;
                 break;
             default:
                 Debug.LogError("case not accounted for");
@@ -123,11 +128,16 @@ public class EnemyTankBehavior : Tank
     void CheckDestinationReached()
     {
         // check if we have reached our destination :)
-        if ((destination - transform.position).magnitude <= 0.1)
+        Vector3 here = transform.position;
+        here.y = 0;
+        Vector3 there = destination;
+        there.y = 0;
+
+        if ((there - here).magnitude <= 0.5)
         {
             Debug.Log("reached destination");
             rb.linearVelocity = Vector3.zero;
-            currentState = EnemyMoveState.WAIT;
+            currentState = EnemyMoveState.DRINK_POTION;
         }
     }
 

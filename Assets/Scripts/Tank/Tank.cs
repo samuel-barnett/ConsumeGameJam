@@ -22,14 +22,17 @@ public class Tank : MonoBehaviour
 
     List<int> damageToMe = new List<int>();
 
+    protected bool controlEnabled = true;
+
     // abilities
     bool canDrink;
     bool shielded;
     int explosiveLevel;
+    float speedLevel = 1;
 
 
-    public List<Consumable> consumables = new List<Consumable>();
-    int currentConsumable = 0;
+    protected List<Consumable> consumables = new List<Consumable>();
+    protected int currentConsumable = 0;
 
     [Header("Tank - Mesh Refs")]
     [SerializeField] protected Mesh headMouthClosed;
@@ -92,7 +95,7 @@ public class Tank : MonoBehaviour
             return;
         }
 
-        Debug.Log("Taking " + damage + " damage");
+        //Debug.Log("Taking " + damage + " damage");
         currentHP -= damage;
         TextPopUpSpawner.sInstance.DamagePopUp(damage, transform.position + (Vector3.up * 4));
         if (currentHP <= 0)
@@ -103,7 +106,25 @@ public class Tank : MonoBehaviour
 
     void Die()
     {
-        Destroy(gameObject);
+        ParticleManager.sInstance.SpawnParticleAtPosition(ParticleType.TANK_DEATH, transform.position);
+
+        if (this is EnemyTankBehavior)
+        {
+            // drop items
+            GameObject item = ItemsManager.sInstance.SpawnRandomItem();
+            item.transform.position = transform.position;
+            Destroy(gameObject);
+        }
+        else if (this is PlayerController)
+        {
+            // go to gameover
+            MenuButtons.sInstance.gameObject.SetActive(true);
+            controlEnabled = false;
+            head.gameObject.SetActive(false);
+            ParticleManager.sInstance.SpawnParticleAtPosition(ParticleType.FIRE, head.transform.position);
+        }
+
+        
     }
 
     public void HealDamage(int healAmount)
@@ -118,7 +139,7 @@ public class Tank : MonoBehaviour
 
     protected void Drive(float direction)
     {
-        Vector3 moveTo = transform.position + (movementAcceleration * Time.fixedDeltaTime * (transform.forward * direction).normalized);
+        Vector3 moveTo = transform.position + (movementAcceleration * speedLevel * Time.fixedDeltaTime * (transform.forward * direction).normalized);
         rb.MovePosition(moveTo);
         //rb.AddForce((transform.forward * direction).normalized * movementAcceleration);
         EnforceSpeedLimit();
@@ -247,7 +268,6 @@ public class Tank : MonoBehaviour
         canDrink = true;
     }
 
-
     public Team GetTeam()
     {
         return team;
@@ -287,6 +307,11 @@ public class Tank : MonoBehaviour
         return inventorySize;
     }
 
+    public bool GetControlEnabled()
+    {
+        return controlEnabled;
+    }
+
     // abilities
     public void SetShielded(bool newShielded)
     {
@@ -298,6 +323,10 @@ public class Tank : MonoBehaviour
         explosiveLevel += explosiveLevelAdditive;
     }
 
+    public void AddSpeedLevel(float speedLevelAdditive)
+    {
+        speedLevel += speedLevelAdditive;
+    }
 
 
 }

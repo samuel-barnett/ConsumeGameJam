@@ -7,6 +7,7 @@ public class ItemsManager : MonoBehaviour
     public static ItemsManager sInstance { get; private set; }
 
     [SerializeField] AnimationCurve itemBobCurve;
+    [SerializeField] AnimationCurve potionBarDrain;
 
     [SerializeField] List<GameObject> itemPrefabPool = new List<GameObject>();
 
@@ -38,6 +39,11 @@ public class ItemsManager : MonoBehaviour
     public AnimationCurve GetItemBobCurve()
     {
         return itemBobCurve;
+    }
+
+    public float EvaluatePotionDrain(float time)
+    {
+        return potionBarDrain.Evaluate(time);
     }
 
 

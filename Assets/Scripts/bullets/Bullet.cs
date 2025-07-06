@@ -55,20 +55,16 @@ public class Bullet : MonoBehaviour
             }
         }
 
-        /*
-        Shield shield = collision.gameObject.GetComponent<Shield>();
-        if (shield && shield.GetTeam() != bulletTeam)
-        {
-            shield.TakeDamage(damage);
-        }
-        */
-
-        //GameObject obj = Instantiate(ItemsManager.sInstance.GetExplosionPrefab());
-        //obj.transform.position = transform.position;
-
         if (!(this is ArtilleryBullet))
         {
-            ParticleManager.sInstance.SpawnParticleAtPosition(ParticleType.EXPLODE, transform.position);
+            if (damage >= 5)
+            {
+                ParticleManager.sInstance.SpawnParticleAtPosition(ParticleType.BIG_EXPLODE, transform.position);
+            }
+            else
+            {
+                ParticleManager.sInstance.SpawnParticleAtPosition(ParticleType.EXPLODE, transform.position);
+            }
         }
         
 

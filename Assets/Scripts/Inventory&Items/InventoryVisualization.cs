@@ -51,29 +51,8 @@ public class InventoryVisualization : MonoBehaviour
                 {
                     image.enabled = true;
                     Consumable consumable = obj.GetComponent<Consumable>();
-                    if (consumable)
-                    {
-                        if (consumable is BluePotion)
-                        {
-                            image.sprite = blueSprite;
-                        }
-                        else if (consumable is GreenPotion)
-                        {
-                            image.sprite = greenSprite;
-                        }
-                        else if (consumable is OrangePotion)
-                        {
-                            image.sprite = orangeSprite;
-                        }
-                        else if (consumable is PurplePotion)
-                        {
-                            image.sprite = purpleSprite;
-                        }
-                        else
-                        {
-                            Debug.LogError("noooooooo");
-                        }
-                    }
+                    Color c;
+                    image.sprite = GetSprite(consumable, out c);
                 }
                 else
                 {
@@ -90,4 +69,39 @@ public class InventoryVisualization : MonoBehaviour
 
 
     }
+
+    public Sprite GetSprite(Consumable consumable, out Color color)
+    {
+        if (consumable)
+        {
+            if (consumable is BluePotion)
+            {
+                color = Color.blue;
+                return blueSprite;
+            }
+            else if (consumable is GreenPotion)
+            {
+                color = Color.green;
+                return greenSprite;
+            }
+            else if (consumable is OrangePotion)
+            {
+                color = Color.orange;
+                return orangeSprite;
+            }
+            else if (consumable is PurplePotion)
+            {
+                color = Color.purple;
+                return purpleSprite;
+            }
+            else
+            {
+                Debug.LogError("noooooooo");
+            }
+        }
+        color = Color.white;
+        return null;
+    }
+
+
 }

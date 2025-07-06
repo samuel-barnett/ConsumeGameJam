@@ -78,6 +78,30 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 1
     m_RotationOrder: 4
+  potionBarDrain:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -1
+      outSlope: -1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -1
+      outSlope: -1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   itemPrefabPool:
   - {fileID: 5297081814614986860, guid: 3972e10beef0d1a49bd592d5d5c513f9, type: 3}
   - {fileID: 2119171682593658308, guid: 9024b3bc20726054eaf139d7a2f9cfdb, type: 3}
@@ -100,3 +124,5 @@ MonoBehaviour:
   bixExplosionParticle: {fileID: 1056904543853562, guid: 4cf45cdce36e66e4a93614abb5ae7821, type: 3}
   artilleryParticle: {fileID: 1352952055292810, guid: d8628f56ce986894a9be0c0fc92627bd, type: 3}
   bigArtilleryParticle: {fileID: 0}
+  tankDeathParticle: {fileID: 1056904543853562, guid: 4cf45cdce36e66e4a93614abb5ae7821, type: 3}
+  fireParticle: {fileID: 1208781713066404, guid: aafad909270f83046bc79c06fe30321a, type: 3}
