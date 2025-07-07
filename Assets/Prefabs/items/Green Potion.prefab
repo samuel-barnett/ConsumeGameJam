@@ -128,7 +128,7 @@ MonoBehaviour:
   rotationSpeed: 25
   bobMagnitude: 0.01
   duration: 8
-  speedIncrease: 2.5
+  speedIncrease: 1.05
 --- !u!1001 &2488118216146674603
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -8,7 +8,7 @@ public class WinTracker : MonoBehaviour
 
     List<EnemyTankBehavior> enemyTanks = new List<EnemyTankBehavior>();
 
-    
+    [SerializeField] int levelToUnlock;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -54,7 +54,7 @@ public class WinTracker : MonoBehaviour
         {
             PlayerController.sInstance.SetControlEnabled(false);
             transform.GetChild(0).gameObject.SetActive(true);
-            SaveManager.sInstance.SetLevelsUnlocked(1);
+            SaveManager.sInstance.SetLevelUnlocked(levelToUnlock);
         }
     }
 

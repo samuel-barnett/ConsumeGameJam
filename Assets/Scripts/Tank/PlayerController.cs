@@ -163,17 +163,17 @@ public class PlayerController : Tank
     {
         // cycle inventory input
         float scroll = Input.GetAxisRaw("Mouse ScrollWheel");
-        if (Input.GetKeyDown(KeyCode.Z) || scroll > 0)
+        if (scroll > 0)
         {
             CycleInventory(-1);
         }
-        if (Input.GetKeyDown(KeyCode.C) || scroll < 0)
+        if (scroll < 0)
         {
             CycleInventory(1);
         }
 
         // use cosnumable
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             TryUseConsumable();
         }

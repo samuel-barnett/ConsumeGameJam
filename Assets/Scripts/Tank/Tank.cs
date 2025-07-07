@@ -129,7 +129,7 @@ public class Tank : MonoBehaviour
         {
             // drop items
             GameObject item = ItemsManager.sInstance.SpawnRandomItem();
-            item.transform.position = transform.position + Vector3.up;
+            item.transform.position = transform.position + (Vector3.up * 1.5f);
             WinTracker.sInstance.RemoveTankFromTracker(this as EnemyTankBehavior);
             Destroy(gameObject);
         }
@@ -379,7 +379,7 @@ public class Tank : MonoBehaviour
             bc.isTrigger = false;
             sc.isTrigger = false;
 
-            //rb.useGravity = true;
+            rb.useGravity = true;
         }
     }
 

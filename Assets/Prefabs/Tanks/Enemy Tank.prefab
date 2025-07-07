@@ -159,7 +159,7 @@ MonoBehaviour:
   head: {fileID: 2537768916122731076}
   mouthPour: {fileID: 2353860551853462868}
   bulletPrefab: {fileID: 7414353819678839670, guid: 4523fc3d33fb218498414d85bbbda069, type: 3}
-  maxHP: 6
+  maxHP: 10
   movementAcceleration: 2
   speedLimit: 4
   steeringSpeed: 80

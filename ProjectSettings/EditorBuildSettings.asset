@@ -6,14 +6,32 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Level 1.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/HomeScreen.unity
+    guid: be83790e29e47564fb51fb21e40d23ae
+  - enabled: 1
+    path: Assets/Scenes/HowToPlay.unity
+    guid: aceb27573237f4d4cab36bb0b33d8596
   - enabled: 1
     path: Assets/Scenes/LevelSelect.unity
     guid: 5770dcb461e50244497d07eb75d3da7a
   - enabled: 1
-    path: Assets/Scenes/HomeScreen.unity
-    guid: be83790e29e47564fb51fb21e40d23ae
+    path: Assets/Scenes/Level 1.unity
+    guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/Level 2.unity
+    guid: 25c727d2d75f33a42a7ce3967d681efd
+  - enabled: 1
+    path: Assets/Scenes/Level 3.unity
+    guid: 1c4a17f2a87bbb34fa06ac9a1f8d4b30
+  - enabled: 1
+    path: Assets/Scenes/Level 4.unity
+    guid: e060d083342156c4a9c36f3526391973
+  - enabled: 1
+    path: Assets/Scenes/Level 5.unity
+    guid: 708e728389fb23046a8f4f88b58e4087
+  - enabled: 1
+    path: Assets/Scenes/Level 6.unity
+    guid: c766b93f341ec3240b3fd56f1f9dc523
   - enabled: 1
     path: Assets/Scenes/WinScreen.unity
     guid: 38b44867d91413b46ab9c32651e8876b

@@ -4,12 +4,12 @@ using UnityEngine.UI;
 public class LevelSelectButton : MonoBehaviour
 {
     [Header("How many levels must be completed to unlock this level?")]
-    [SerializeField] int completedLevelsRequired;
+    [SerializeField] int levelIndex;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        CheckButtonEnabled();
+        //CheckButtonEnabled();
     }
 
     // Update is called once per frame
@@ -20,7 +20,9 @@ public class LevelSelectButton : MonoBehaviour
 
     public void CheckButtonEnabled()
     {
-        if (SaveManager.sInstance.GetLevelsUnlocked() >= completedLevelsRequired)
+        int levelSave = SaveManager.sInstance.GetLevelUnlocked(levelIndex);
+        Debug.Log(levelIndex + ":" + levelSave);
+        if (levelSave == 1)
         {
             Button button = GetComponent<Button>();
             button.enabled = true;

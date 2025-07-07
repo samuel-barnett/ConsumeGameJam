@@ -23,6 +23,15 @@ public class MenuButtons : MonoBehaviour
         //sInstance.gameObject.SetActive(false);
     }
 
+
+    private void Start()
+    {
+        foreach (LevelSelectButton button in levelSelectButtons)
+        {
+            button.CheckButtonEnabled();
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -47,7 +56,7 @@ public class MenuButtons : MonoBehaviour
 
     public void UnlockLevelProgress()
     {
-        SaveManager.sInstance.SetLevelsUnlocked(5);
+        SaveManager.sInstance.SetLevelUnlocked(0);
         foreach (LevelSelectButton button in levelSelectButtons)
         {
             button.CheckButtonEnabled();
@@ -56,7 +65,8 @@ public class MenuButtons : MonoBehaviour
 
     public void ClearLevelProgress()
     {
-        SaveManager.sInstance.SetLevelsUnlocked(0);
+        Debug.Log("asd");
+        SaveManager.sInstance.SetLevelUnlocked(-1);
         foreach (LevelSelectButton button in levelSelectButtons)
         {
             button.CheckButtonEnabled();

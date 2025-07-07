@@ -149,12 +149,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01a3a04024428eb43add26d97da14612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 4
+  damage: 5
   explosionRadius: 1
-  explosionPrefab: {fileID: 1754934478356031003, guid: b18709eccfa63e64dbc10df3dfe6cf46, type: 3}
   gravityModifier: 0
   minTargetRadius: 1
   maxTargetRadius: 5
   elevationToStart: 100
   targetPrefab: {fileID: 6345512537114986286, guid: aa213faee46a88b47bc678ce13b7cd36, type: 3}
-  timeToDescend: 2
+  timeToDescend: 0.5
