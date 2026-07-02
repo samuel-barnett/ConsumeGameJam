@@ -86,12 +86,12 @@ public class InventoryVisualization : MonoBehaviour
             }
             else if (consumable is OrangePotion)
             {
-                color = Color.orange;
+                color = new Color(255, 128, 0);
                 return orangeSprite;
             }
             else if (consumable is PurplePotion)
             {
-                color = Color.purple;
+                color = new Color(255, 0, 255);
                 return purpleSprite;
             }
             else
